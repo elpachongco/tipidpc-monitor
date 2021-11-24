@@ -15,11 +15,14 @@ package main
 
 import (
 	"fmt"
-	"golang.org/x/net/html"
 	"io"
 	"log"
 	"net/http"
+	"os/exec"
+	"strings"
 	"time"
+
+	"golang.org/x/net/html"
 )
 
 const (
@@ -159,7 +162,7 @@ func CompareItems(prev, curr []Item) []Item {
 	}
 
 	// Scan matches to see if they're in sequence
-	for i := 0; i < len(matchIndex)-1 ; i++{
+	for i := 0; i < len(matchIndex)-1; i++ {
 		if matchIndex[i+1] != matchIndex[i]+1 {
 			return []Item{}
 		}
@@ -170,9 +173,20 @@ func CompareItems(prev, curr []Item) []Item {
 
 // Notify looks at all the items and sends a notification based on the mode
 func Notify(i []Item, method string) {
-
 	switch method {
-	// case "dmenu"
+	case "dmenu":
+		var s string
+		for k, v := range i {
+			fmtStr := fmt.Sprintf("%d %.45s\t \t%.6s\n", k, v.Name, v.Price)
+			s += fmtStr
+			fmt.Print(fmtStr)
+		}
+
+		cmd := exec.Command("dmenu", "-l10")
+		// Pipe the strings to the command
+		cmd.Stdin = strings.NewReader(s)
+		cmd.Run()
+
 	default:
 		for k, v := range i {
 			fmt.Printf("%d %.45s\t \t%.6s\n", k, v.Name, v.Price)
