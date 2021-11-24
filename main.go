@@ -48,7 +48,10 @@ func main() {
 		// Compare old and new slice of listings.
 		// Return a slice of new listings.
 		newItems := CompareItems(oldItems, items)
-		Notify(newItems, "print")
+
+		if len(oldItems) < 1 {
+			Notify(newItems, "print")
+		}
 
 		time.Sleep(interval)
 	}
