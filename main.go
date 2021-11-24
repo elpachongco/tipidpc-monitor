@@ -49,7 +49,7 @@ func main() {
 		// Return a slice of new listings.
 		newItems := CompareItems(oldItems, items)
 
-		if len(oldItems) < 1 {
+		if len(oldItems) > 0 {
 			Notify(newItems, "print")
 		}
 
