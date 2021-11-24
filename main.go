@@ -188,10 +188,10 @@ func Notify(i []Item, method string) {
 			fmt.Print(fmtStr)
 		}
 
-		cmd := exec.Command("dmenu", "-l10")
+		cmd := exec.Command("dmenu", "-l", "10")
 		// Pipe the strings to the command
 		cmd.Stdin = strings.NewReader(s)
-		cmd.Run()
+		cmd.Start()
 
 	default:
 		for k, v := range i {
