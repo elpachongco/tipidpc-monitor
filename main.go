@@ -178,6 +178,9 @@ func CompareItems(prev, curr []Item) []Item {
 func Notify(i []Item, method string) {
 	switch method {
 	case "dmenu":
+		if len(i) < 1 {
+			return
+		}
 		var s string
 		for k, v := range i {
 			fmtStr := fmt.Sprintf("%d %.45s\t \t%.6s\n", k, v.Name, v.Price)
